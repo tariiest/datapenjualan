@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Penjualan</title>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: rgb(68, 116, 141);
+            color: rgb(255, 255, 255);
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .sidebar-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .sidebar-list-item {
+            margin: 15px 0;
+        }
+
+        .sidebar-list-item a {
+            color: rgb(255, 251, 251);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+
+        .sidebar-list-item a:hover {
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .sidebar h2 {
+        margin-bottom: 20px; 
+        border-bottom: 2px solid #555;
+        padding-bottom: 10px; 
+        }
+
+        .sidebar-list-item {
+            margin-top: 15px; /* Jarak antar item */
+        }
+
+
+        .material-icons-outlined {
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .main-container {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .main-title p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .main-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: rgb(64, 91, 141);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-primary {
+            color: #ffffff;
+        }
+
+        /* Charts */
+        .charts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .charts-card {
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            flex: 1 1 45%;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: collapse;
+            background-color: rgb(214, 214, 214);
+            box-shadow: 0 0 10px rgba(250, 0, 212, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #729ac9;
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            background-color: rgb(39, 60, 94);
+            color: rgb(0, 0, 0);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Chart Canvas */
+        canvas {
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>DATA PENJUALAN 2022 - 2023</h2>
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <a href="#dashboard">
+                    <span class="material-icons-outlined">dashboard</span> Dashboard
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="#data-table">
+                    <span class="material-icons-outlined">inventory_2</span> Data Penjualan
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="main-title">
+            <p>DASHBOARD</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="main-cards">
+            <div class="card">
+                <div class="card-inner">
+                    <p class="text-primary">TOTAL PENJUALAN 2022</p>
+                    <span class="material-icons-outlined text-blue">inventory_2</span>
+                </div>
+                <span class="text-primary font-weight-bold">65.164</span>
+            </div>
+
+            <div class="card">
+              <div class="card-inner">
+                  <p class="text-primary">TOTAL PENJUALAN 2023</p>
+                  <span class="material-icons-outlined text-blue">inventory_2</span>
+              </div>
+              <span class="text-primary font-weight-bold">86.133</span>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>January</th>
+                    <th>February</th>
+                    <th>March</th>
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2022</td>
+                    <td>4017</td><td>6135</td><td>7091</td><td>5841</td><td>5036</td>
+                    <td>4547</td><td>3467</td><td>3970</td><td>6313</td><td>3595</td><td>9207</td><td>5945</td>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>2416</td><td>4136</td><td>7935</td><td>8004</td><td>9505</td>
+                    <td>5026</td><td>6108</td><td>6343</td><td>9404</td><td>9280</td><td>9287</td><td>8689</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Grafik Chart.js -->
+        <canvas id="salesChart" width="800" height="400"></canvas>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: '2022',
+                    data: [4017, 6135, 7091, 5841, 5036, 4547, 3467, 3970, 6313, 3595, 9207, 5945],
+                    backgroundColor: 'rgba(61, 127, 146, 0.8)'
+                }, {
+                    label: '2023',
+                    data: [2416, 4136, 7935, 8004, 9505, 5026, 6108, 6343, 9404, 9280, 9287, 8689],
+                    backgroundColor: 'rgba(212, 173, 174, 0.7)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
